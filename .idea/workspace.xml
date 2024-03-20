@@ -4,10 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="ccc9f8bc-eca1-4241-acc2-0fa6a5493e0f" name="更改" comment="first commit">
-      <change beforePath="$PROJECT_DIR$/.idea/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.gitignore" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-    </list>
+    <list default="true" id="ccc9f8bc-eca1-4241-acc2-0fa6a5493e0f" name="更改" comment="提交配置文件" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -43,6 +40,7 @@
   "keyToString": {
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
+    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
     "WebServerToolWindowFactoryState": "false",
     "dart.analysis.tool.window.visible": "false",
     "git-widget-placeholder": "master",
@@ -67,7 +65,7 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1710935527305</updated>
-      <workItem from="1710935528695" duration="3212000" />
+      <workItem from="1710935528695" duration="3527000" />
     </task>
     <task id="LOCAL-00001" summary="1231">
       <option name="closed" value="true" />
@@ -117,7 +115,31 @@
       <option name="project" value="LOCAL" />
       <updated>1710937448668</updated>
     </task>
-    <option name="localTasksCounter" value="7" />
+    <task id="LOCAL-00007" summary="first commit">
+      <option name="closed" value="true" />
+      <created>1710938870009</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1710938870009</updated>
+    </task>
+    <task id="LOCAL-00008" summary="提交.gitignore">
+      <option name="closed" value="true" />
+      <created>1710938900660</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1710938900660</updated>
+    </task>
+    <task id="LOCAL-00009" summary="提交配置文件">
+      <option name="closed" value="true" />
+      <created>1710938951431</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1710938951431</updated>
+    </task>
+    <option name="localTasksCounter" value="10" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -149,7 +171,9 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="1231" />
     <MESSAGE value="first commit" />
-    <option name="LAST_COMMIT_MESSAGE" value="first commit" />
+    <MESSAGE value="提交.gitignore" />
+    <MESSAGE value="提交配置文件" />
+    <option name="LAST_COMMIT_MESSAGE" value="提交配置文件" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />
