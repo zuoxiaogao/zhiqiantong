@@ -1,7 +1,10 @@
 package com.zhiqiantong.content.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.zhiqiantong.content.model.dto.TeachplanDto;
 import com.zhiqiantong.content.model.po.Teachplan;
+
+import java.util.List;
 
 /**
  * <p>
@@ -13,4 +16,5 @@ import com.zhiqiantong.content.model.po.Teachplan;
  */
 public interface TeachplanService extends IService<Teachplan> {
 
+    List<TeachplanDto> getTreeNodes(Long courseId);
 }
