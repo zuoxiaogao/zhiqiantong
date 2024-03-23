@@ -33,3 +33,29 @@ Content-Type: application/json
   "description": ""
 
 }
+
+### 根据课程id查询课程信息
+GET {{content_host}}/content/course/122
+
+### 修改课程
+PUT {{content_host}}/content/course
+Content-Type: application/json
+
+{
+  "id": 122,
+  "name": "flutter",
+  "users": "所有的学习编程的大小朋友123456。",
+  "tags": "flutter从入门到入土123456",
+  "mt": "1-2",
+  "st": "1-2-8",
+  "grade": "204001",
+  "teachmode": "200002",
+  "description": "一个月让你成为flutter开发大佬。",
+  "pic": "",
+  "charge": "201001",
+  "price": 188.0,
+  "qq": "154796811013456",
+  "wechat": "18339407112",
+  "phone": "18339407112"
+}
+
