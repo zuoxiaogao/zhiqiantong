@@ -59,3 +59,7 @@ Content-Type: application/json
   "phone": "18339407112"
 }
 
+### 查询某个课程的课程计划
+GET {{content_host}}/content/teachplan/74/tree-nodes
+
+
