@@ -1,4 +1,4 @@
-package com.zhiqiantong.content.controller;
+package com.zhiqiantong.content.api;
 
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;

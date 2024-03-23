@@ -1,8 +1,11 @@
 package com.zhiqiantong.content.mapper;
 
+import com.zhiqiantong.content.model.dto.CourseCategoryTreeDto;
 import com.zhiqiantong.content.model.po.CourseCategory;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import org.springframework.stereotype.Repository;
+
+import java.util.List;
 
 /**
  * <p>
@@ -12,5 +15,7 @@ import org.springframework.stereotype.Repository;
  * @author zxg
  */
 public interface CourseCategoryMapper extends BaseMapper<CourseCategory> {
+
+    public List<CourseCategoryTreeDto> selectTreeNodes(String id);
 
 }
