@@ -1,11 +1,9 @@
 package com.zhiqiantong.content.api;
 
+import com.zhiqiantong.content.model.dto.SaveTeachplanDto;
 import com.zhiqiantong.content.model.dto.TeachplanDto;
 import io.swagger.annotations.ApiImplicitParam;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import com.zhiqiantong.content.service.TeachplanService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -37,4 +35,27 @@ public class TeachplanController {
         return teachplanService.getTreeNodes(courseId);
     }
 
+    @ApiOperation("课程计划创建或修改")
+    @PostMapping("")
+    public void saveTeachplan(@RequestBody SaveTeachplanDto teachplan){
+        teachplanService.saveTeachplan(teachplan);
+    }
+
+    @ApiOperation("删除课程计划根据id")
+    @DeleteMapping("/{teachplanId}")
+    public void deletedTeachplanById(@PathVariable Long teachplanId){
+        teachplanService.deletedTeachplanById(teachplanId);
+    }
+
+    @ApiOperation("上移课程计划根据id")
+    @PostMapping("/moveup/{teachplanId}")
+    public void moveUp(@PathVariable Long teachplanId){
+        teachplanService.moveUp(teachplanId);
+    }
+
+    @ApiOperation("下移课程计划根据id")
+    @PostMapping("/movedown/{teachplanId}")
+    public void moveDown(@PathVariable Long teachplanId){
+        teachplanService.moveDown(teachplanId);
+    }
 }

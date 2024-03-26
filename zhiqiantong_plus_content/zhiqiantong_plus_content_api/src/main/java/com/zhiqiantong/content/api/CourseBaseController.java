@@ -52,4 +52,9 @@ public class CourseBaseController {
         return courseBaseService.modifyCourseBase(COMPANY_ID,editCourseDto);
     }
 
+    @ApiOperation("删除课程基础信息接口")
+    @DeleteMapping("{courseId}")
+    public void deleteCourseBase(@PathVariable Long courseId){
+        courseBaseService.deleteCourseBase(COMPANY_ID,courseId);
+    }
 }

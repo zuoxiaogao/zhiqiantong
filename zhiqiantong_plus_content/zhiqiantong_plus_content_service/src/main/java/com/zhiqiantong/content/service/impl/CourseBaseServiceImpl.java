@@ -5,16 +5,12 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.zhiqiantong.base.execption.ZhiQianTongPlusException;
 import com.zhiqiantong.base.model.PageParams;
 import com.zhiqiantong.base.model.PageResult;
-import com.zhiqiantong.content.mapper.CourseBaseMapper;
-import com.zhiqiantong.content.mapper.CourseCategoryMapper;
-import com.zhiqiantong.content.mapper.CourseMarketMapper;
+import com.zhiqiantong.content.mapper.*;
 import com.zhiqiantong.content.model.dto.AddCourseDto;
 import com.zhiqiantong.content.model.dto.CourseBaseInfoDto;
 import com.zhiqiantong.content.model.dto.EditCourseDto;
 import com.zhiqiantong.content.model.dto.QueryCourseParamsDto;
-import com.zhiqiantong.content.model.po.CourseBase;
-import com.zhiqiantong.content.model.po.CourseCategory;
-import com.zhiqiantong.content.model.po.CourseMarket;
+import com.zhiqiantong.content.model.po.*;
 import com.zhiqiantong.content.service.CourseBaseService;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang.StringUtils;
@@ -43,6 +39,12 @@ public class CourseBaseServiceImpl extends ServiceImpl<CourseBaseMapper, CourseB
     private CourseBaseMapper courseBaseMapper;
     @Autowired
     private CourseMarketMapper courseMarketMapper;
+    @Autowired
+    private TeachplanMapper teachplanMapper;
+    @Autowired
+    private CourseTeacherMapper courseTeacherMapper;
+    @Autowired
+    private TeachplanMediaMapper teachplanMediaMapper;
     @Autowired
     private CourseCategoryMapper courseCategoryMapper;
 
@@ -156,6 +158,32 @@ public class CourseBaseServiceImpl extends ServiceImpl<CourseBaseMapper, CourseB
 
         //查询课程信息
         return this.getCourseBaseInfo(courseId);
+    }
+
+    @Transactional
+    @Override
+    public void deleteCourseBase(Long companyId, Long courseId) {
+        if (companyId == null || !companyId.equals(COMPANY_ID)) {
+            ZhiQianTongPlusException.cast("你不能操作其他组织的课程信息，请稍后重试！");
+        }
+        LambdaQueryWrapper<CourseTeacher> lqw1 = new LambdaQueryWrapper<>();
+        lqw1.eq(CourseTeacher::getCourseId,courseId);
+        LambdaQueryWrapper<Teachplan> lqw2 = new LambdaQueryWrapper<>();
+        lqw2.eq(Teachplan::getCourseId,courseId);
+        LambdaQueryWrapper<CourseMarket> lqw3 = new LambdaQueryWrapper<>();
+        lqw3.eq(CourseMarket::getId,courseId);
+        LambdaQueryWrapper<CourseBase> lqw4 = new LambdaQueryWrapper<>();
+        lqw4.eq(CourseBase::getId,courseId);
+        LambdaQueryWrapper<TeachplanMedia> lqw5 = new LambdaQueryWrapper<>();
+        lqw5.eq(TeachplanMedia::getCourseId,courseId);
+        courseTeacherMapper.delete(lqw1);
+        teachplanMapper.delete(lqw2);
+        courseMarketMapper.delete(lqw3);
+        int delete = courseBaseMapper.delete(lqw4);
+        teachplanMediaMapper.delete(lqw5);
+        if (delete <= 0) {
+            ZhiQianTongPlusException.cast("删除课程信息出现了错误，请稍后重试！");
+        }
     }
 
     //保存课程的营销信息
