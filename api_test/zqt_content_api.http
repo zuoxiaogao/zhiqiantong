@@ -1,5 +1,5 @@
 ### 课程查询列表
-POST {{content_host}}/content/course/list?pageNo=1&pageSize=10
+POST {{gateway_host}}/content/course/list?pageNo=1&pageSize=10
 Content-Type: application/json
 
 {
@@ -31,7 +31,6 @@ Content-Type: application/json
   "tags": "",
   "grade": "204001",
   "description": ""
-
 }
 
 ### 根据课程id查询课程信息
@@ -110,5 +109,92 @@ Content-Type: application/json
 ### 删除课程计划
 DELETE {{content_host}}/content/teachplan/305
 
+### 上传文件
+POST {{media_host}}/media/upload/coursefile
+Content-Type: multipart/form-data; boundary=WebAppBoundary
 
+--WebAppBoundary
+Content-Disposition: form-data; name="filedata"; filename="1.jpg"
+Content-Type: application/octet-stream
+
+< C:\Users\15479\Pictures\Camera Roll\1558302899229.jpg
+
+### 课程发布
+POST {{content_host}}/content/coursepublish/128
+
+### 添加课程索引
+POST {{search_host}}/search/index/course
+Content-Type: application/json
+
+{
+  "charge" : "201000",
+  "companyId" : 100000,
+  "companyName" : "北京黑马程序",
+  "createDate" : "2022-09-25 09:36:11",
+  "description" : "《Spring编程思想》是2007年6月1日机械工业出版社出版的图书，作者是埃克尔，译者是陈昊鹏。主要内容本书赢得了全球程序员的广泛赞誉，即使是最晦涩的概念，在Bruce Eckel的文字亲和力和小而直接的编程示例面前也会化解于无形。从Java的基础语法到最高级特性（深入的面向对象概念、多线程、自动项目构建、单元测试和调试等），本书都能逐步指导你轻松掌握。从本书获得的各项大奖以及来自世界各地的读者评论中，不难看出这是一本经典之作",
+  "grade" : "204001",
+  "id" : 102,
+  "mt" : "1-3",
+  "mtName" : "编程开发",
+  "name" : "Spring编程思想",
+  "originalPrice" : 200.0,
+  "pic" : "/mediafiles/2022/09/20/1d0f0e6ed8a0c4a89bfd304b84599d9c.png",
+  "price" : 100.0,
+  "remark" : "没有备注",
+  "st" : "1-3-2",
+  "stName" : "Java语言",
+  "status" : "203002",
+  "tags" : "没有标签",
+  "teachmode" : "200002",
+  "validDays" : 222
+}
+
+### 搜索课程
+GET {{search_host}}/search/course/list?pageNo=1&keywords=spring
+Content-Type: application/json
+
+### 授权码模式
+### 第一步申请授权码(浏览器请求)/oauth/authorize?client_id=c1&response_type=code&scope=all&redirect_uri=http://www.51xuecheng.cn
+### 第二步申请令牌
+POST {{auth_host}}/auth/oauth/token?client_id=ZqtWebApp&client_secret=ZqtWebApp&grant_type=authorization_code&code=IhGmuv&redirect_uri=http://www.51xuecheng.cn
+
+### 密码模式
+POST {{auth_host}}/auth/oauth/token?client_id=ZqtWebApp&client_secret=ZqtWebApp&grant_type=password&username=stu1&password=111111
+
+###校验jwt令牌
+POST {{auth_host}}/auth/oauth/check_token?client_id=ZqtWebApp&client_secret=ZqtWebApp&token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhdWQiOlsiemhpcWlhbnRvbmctcGx1cyJdLCJ1c2VyX25hbWUiOiJ7XCJiaXJ0aGRheVwiOlwiMjAyMi0wOS0yOFQxOToyODo0NlwiLFwiY3JlYXRlVGltZVwiOlwiMjAyMi0wOS0yOFQwODozMjowM1wiLFwiaWRcIjpcIjUwXCIsXCJuYW1lXCI6XCLlrabnlJ8xXCIsXCJuaWNrbmFtZVwiOlwi5aSn5rC054mbXCIsXCJzZXhcIjpcIjFcIixcInN0YXR1c1wiOlwiMVwiLFwidXNlcm5hbWVcIjpcInN0dTFcIixcInVzZXJwaWNcIjpcImh0dHA6Ly9maWxlLjUxeHVlY2hlbmcuY24vZGRkZlwiLFwidXR5cGVcIjpcIjEwMTAwMVwifSIsInNjb3BlIjpbImFsbCJdLCJleHAiOjE3MTIwMDIyNzAsImF1dGhvcml0aWVzIjpbInRlc3QiXSwianRpIjoiMTUxNWJiZTMtNWM0NC00M2UwLWFkN2EtNWUxMGQ5NjBiODc4IiwiY2xpZW50X2lkIjoiWnF0V2ViQXBwIn0.L-nUxxVgimU_W9s1BJ7eUHlLqzq1dmvjwFK59Uojiw8
+
+### 携带token访问资源服务
+GET http://localhost:63040/content/course/2
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhdWQiOlsiemhpcWlhbnRvbmctcGx1cyJdLCJ1c2VyX25hbWUiOiJ7XCJiaXJ0aGRheVwiOlwiMjAyMi0wOS0yOFQxOToyODo0NlwiLFwiY3JlYXRlVGltZVwiOlwiMjAyMi0wOS0yOFQwODozMjowM1wiLFwiaWRcIjpcIjUwXCIsXCJuYW1lXCI6XCLlrabnlJ8xXCIsXCJuaWNrbmFtZVwiOlwi5aSn5rC054mbXCIsXCJzZXhcIjpcIjFcIixcInN0YXR1c1wiOlwiMVwiLFwidXNlcm5hbWVcIjpcInN0dTFcIixcInVzZXJwaWNcIjpcImh0dHA6Ly9maWxlLjUxeHVlY2hlbmcuY24vZGRkZlwiLFwidXR5cGVcIjpcIjEwMTAwMVwifSIsInNjb3BlIjpbImFsbCJdLCJleHAiOjE3MTIwMDIyNzAsImF1dGhvcml0aWVzIjpbInRlc3QiXSwianRpIjoiMTUxNWJiZTMtNWM0NC00M2UwLWFkN2EtNWUxMGQ5NjBiODc4IiwiY2xpZW50X2lkIjoiWnF0V2ViQXBwIn0.L-nUxxVgimU_W9s1BJ7eUHlLqzq1dmvjwFK59Uojiw8
+
+### 通过网关访问资源服务
+GET http://localhost:63010/content/course/2
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhdWQiOlsiemhpcWlhbnRvbmctcGx1cyJdLCJ1c2VyX25hbWUiOiJ6aGFuZ3NhbiIsInNjb3BlIjpbImFsbCJdLCJleHAiOjE3MTE5OTc2MTUsImF1dGhvcml0aWVzIjpbInAxIl0sImp0aSI6ImQwODEwZTI0LTMwMTgtNDFhZi05YjM2LWRlN2ZjOWMzNTkwZSIsImNsaWVudF9pZCI6IlpxdFdlYkFwcCJ9.HVox0m-9B1gDfZrDLJ9j8m0Ds1H1AQxCm5zB0bnwgaQ
+
+################扩展认证请求参数后######################
+###密码模式
+POST {{auth_host}}/auth/oauth/token?client_id=ZqtWebApp&client_secret=ZqtWebApp&grant_type=password&username={"username":"stu1","authType":"password","password":"111111"}
+
+### 申请验证码
+POST {{checkcode_host}}/checkcode/pic
+
+### 校验验证码
+POST {{checkcode_host}}/checkcode/verify?key=checkcode:3272531d6dd241a3a20385028511d335&code=XKVZ
+
+###
+POST {{auth_host}}/auth/findpassword
+Content-Type: application/json
+
+{
+  "cellphone":"",
+  "email":"",
+  "checkcodekey":"",
+  "checkcode":"",
+  "confirmpwd":"",
+  "password":""
+}
+
+### 查询课程发布信息
+GET {{content_host}}/content/r/coursepublish/2
 

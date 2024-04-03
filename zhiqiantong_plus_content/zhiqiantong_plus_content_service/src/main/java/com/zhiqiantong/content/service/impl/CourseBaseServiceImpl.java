@@ -49,7 +49,7 @@ public class CourseBaseServiceImpl extends ServiceImpl<CourseBaseMapper, CourseB
     private CourseCategoryMapper courseCategoryMapper;
 
     @Override
-    public PageResult<CourseBase> queryAllList(PageParams pageParams, QueryCourseParamsDto queryCourseParams) {
+    public PageResult<CourseBase> queryAllList(long companyId, PageParams pageParams, QueryCourseParamsDto queryCourseParams) {
         //构建查询条件对象
         LambdaQueryWrapper<CourseBase> queryWrapper = new LambdaQueryWrapper<>();
         //构建查询条件，根据课程名称查询
@@ -58,6 +58,8 @@ public class CourseBaseServiceImpl extends ServiceImpl<CourseBaseMapper, CourseB
         queryWrapper.eq(StringUtils.isNotEmpty(queryCourseParams.getAuditStatus()),CourseBase::getAuditStatus,queryCourseParams.getAuditStatus());
         //构建查询条件，根据课程发布状态查询
         queryWrapper.eq(StringUtils.isNotEmpty(queryCourseParams.getPublishStatus()),CourseBase::getStatus,queryCourseParams.getPublishStatus());
+        //构建查询条件，根据机构id查询
+        queryWrapper.eq(CourseBase::getCompanyId,companyId);
 
         //分页对象
         Page<CourseBase> page = new Page<>(pageParams.getPageNo(), pageParams.getPageSize());
@@ -186,28 +188,8 @@ public class CourseBaseServiceImpl extends ServiceImpl<CourseBaseMapper, CourseB
         }
     }
 
-    //保存课程的营销信息
-    private int saveCourseMarket(CourseMarket courseMarket) {
-        String charge = courseMarket.getCharge();
-        if (StringUtils.isBlank(charge)) {
-            throw new ZhiQianTongPlusException("收费规则没有选择");
-        }
-        if (charge.equals(COURSE_IS_CHARGE)) {
-            if (courseMarket.getPrice() == null || courseMarket.getPrice() <= 0) {
-                throw new ZhiQianTongPlusException("课程为收费价格不能为空且必须大于0");
-            }
-        }
-        CourseMarket courseMarketObj = courseMarketMapper.selectById(courseMarket.getId());
-        if (courseMarketObj == null) {
-            return courseMarketMapper.insert(courseMarket);
-        }else {
-            BeanUtils.copyProperties(courseMarket, courseMarketObj);
-            courseMarketObj.setId(courseMarket.getId());
-            return courseMarketMapper.updateById(courseMarketObj);
-        }
-    }
-
-    private CourseBaseInfoDto getCourseBaseInfo(long courseId) {
+    @Override
+    public CourseBaseInfoDto getCourseBaseInfo(long courseId) {
         CourseBaseInfoDto courseBaseInfoDto = new CourseBaseInfoDto();
         CourseBase courseBase = courseBaseMapper.selectById(courseId);
         if (courseBase == null) {
@@ -230,6 +212,27 @@ public class CourseBaseServiceImpl extends ServiceImpl<CourseBaseMapper, CourseB
         }
         courseBaseInfoDto.setMtName(courseCategoryByMt.getName());
         return courseBaseInfoDto;
+    }
+
+    //保存课程的营销信息
+    private int saveCourseMarket(CourseMarket courseMarket) {
+        String charge = courseMarket.getCharge();
+        if (StringUtils.isBlank(charge)) {
+            throw new ZhiQianTongPlusException("收费规则没有选择");
+        }
+        if (charge.equals(COURSE_IS_CHARGE)) {
+            if (courseMarket.getPrice() == null || courseMarket.getPrice() <= 0) {
+                throw new ZhiQianTongPlusException("课程为收费价格不能为空且必须大于0");
+            }
+        }
+        CourseMarket courseMarketObj = courseMarketMapper.selectById(courseMarket.getId());
+        if (courseMarketObj == null) {
+            return courseMarketMapper.insert(courseMarket);
+        }else {
+            BeanUtils.copyProperties(courseMarket, courseMarketObj);
+            courseMarketObj.setId(courseMarket.getId());
+            return courseMarketMapper.updateById(courseMarketObj);
+        }
     }
 
     private void courseBaseParamCheck(AddCourseDto params) {

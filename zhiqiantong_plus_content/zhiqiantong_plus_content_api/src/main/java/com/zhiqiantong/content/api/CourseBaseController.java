@@ -9,10 +9,13 @@ import com.zhiqiantong.content.model.dto.EditCourseDto;
 import com.zhiqiantong.content.model.dto.QueryCourseParamsDto;
 import com.zhiqiantong.content.model.po.CourseBase;
 import com.zhiqiantong.content.service.CourseBaseService;
+import com.zhiqiantong.content.util.SecurityUtil;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
@@ -28,10 +31,18 @@ public class CourseBaseController {
 
 
     @ApiOperation("所有课程查询接口")
+    @PreAuthorize("hasAuthority('xc_teachmanager_course_list')")
     @PostMapping("/list")
     public PageResult<CourseBase> list(PageParams pageParams,
         @RequestBody QueryCourseParamsDto queryCourseParams) {
-        return courseBaseService.queryAllList(pageParams,queryCourseParams);
+        //取出用户身份
+        SecurityUtil.ZqtUser user = SecurityUtil.getUser();
+        //机构id
+        String companyId = null;
+        if (user != null) {
+            companyId = user.getCompanyId();
+        }
+        return courseBaseService.queryAllList(Long.parseLong(companyId == null ? "1" : companyId),pageParams,queryCourseParams);
     }
 
     @ApiOperation("新增课程基础信息接口")
@@ -43,6 +54,11 @@ public class CourseBaseController {
     @ApiOperation("根据课程id查询接口")
     @GetMapping("/{courseId}")
     public CourseBaseInfoDto getCourseBaseById(@PathVariable Long courseId){
+        //取出当前用户身份
+//        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        SecurityUtil.ZqtUser user = SecurityUtil.getUser();
+        System.out.println(user);
+
         return courseBaseService.getCourseBaseById(COMPANY_ID,courseId);
     }
 

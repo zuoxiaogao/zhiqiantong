@@ -6,6 +6,7 @@ import com.zhiqiantong.base.execption.ZhiQianTongPlusException;
 import com.zhiqiantong.content.mapper.CourseBaseMapper;
 import com.zhiqiantong.content.mapper.TeachplanMapper;
 import com.zhiqiantong.content.mapper.TeachplanMediaMapper;
+import com.zhiqiantong.content.model.dto.BindTeachplanMediaDto;
 import com.zhiqiantong.content.model.dto.SaveTeachplanDto;
 import com.zhiqiantong.content.model.dto.TeachplanDto;
 import com.zhiqiantong.content.model.po.CourseBase;
@@ -135,6 +136,56 @@ public class TeachplanServiceImpl extends ServiceImpl<TeachplanMapper, Teachplan
     @Override
     public void moveDown(Long teachplanId) {
         upOrDownMove(teachplanId,"down");
+    }
+
+    @Transactional
+    @Override
+    public TeachplanMedia associationMedia(BindTeachplanMediaDto bindTeachplanMediaDto) {
+        //教学计划id
+        Long teachplanId = bindTeachplanMediaDto.getTeachplanId();
+        Teachplan teachplan = teachplanMapper.selectById(teachplanId);
+        if(teachplan==null){
+            ZhiQianTongPlusException.cast("教学计划不存在");
+        }
+        Integer grade = teachplan.getGrade();
+        if(grade!=2){
+            ZhiQianTongPlusException.cast("只允许第二级教学计划绑定媒资文件");
+        }
+        //课程id
+        Long courseId = teachplan.getCourseId();
+
+        //先删除原来该教学计划绑定的媒资
+        teachplanMediaMapper.delete(new LambdaQueryWrapper<TeachplanMedia>().eq(TeachplanMedia::getTeachplanId,teachplanId));
+
+        //再添加教学计划与媒资的绑定关系
+        TeachplanMedia teachplanMedia = new TeachplanMedia();
+        teachplanMedia.setCourseId(courseId);
+        teachplanMedia.setTeachplanId(teachplanId);
+        teachplanMedia.setMediaFilename(bindTeachplanMediaDto.getFileName());
+        teachplanMedia.setMediaId(bindTeachplanMediaDto.getMediaId());
+        teachplanMedia.setCreateDate(LocalDateTime.now());
+        teachplanMediaMapper.insert(teachplanMedia);
+        teachplan.setMediaType("1");
+        teachplanMapper.updateById(teachplan);
+        return teachplanMedia;
+
+    }
+
+    @Override
+    public void deleteAssociationMedia(Long teachPlanId, String mediaId) {
+        if (teachPlanId == null) {
+            ZhiQianTongPlusException.cast("教学计划为空，请稍后重试！");
+        }
+        if (StringUtils.isBlank(mediaId)) {
+            ZhiQianTongPlusException.cast("媒体资源id为空，请稍后重试！");
+        }
+        LambdaQueryWrapper<TeachplanMedia> lambdaQueryWrapper = new LambdaQueryWrapper<>();
+        lambdaQueryWrapper.eq(TeachplanMedia::getTeachplanId,teachPlanId);
+        lambdaQueryWrapper.eq(TeachplanMedia::getMediaId,mediaId);
+        int delete = teachplanMediaMapper.delete(lambdaQueryWrapper);
+        if (delete <= 0) {
+            ZhiQianTongPlusException.cast("删除绑定资源失败，请稍后重试！");
+        }
     }
 
     private int getTeachplanCount(Long courseId, Long parentid) {

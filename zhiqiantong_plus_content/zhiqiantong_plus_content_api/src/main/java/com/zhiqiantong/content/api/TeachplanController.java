@@ -1,5 +1,6 @@
 package com.zhiqiantong.content.api;
 
+import com.zhiqiantong.content.model.dto.BindTeachplanMediaDto;
 import com.zhiqiantong.content.model.dto.SaveTeachplanDto;
 import com.zhiqiantong.content.model.dto.TeachplanDto;
 import io.swagger.annotations.ApiImplicitParam;
@@ -57,5 +58,17 @@ public class TeachplanController {
     @PostMapping("/movedown/{teachplanId}")
     public void moveDown(@PathVariable Long teachplanId){
         teachplanService.moveDown(teachplanId);
+    }
+
+    @ApiOperation(value = "课程计划和媒资信息绑定")
+    @PostMapping("/association/media")
+    public void associationMedia(@RequestBody BindTeachplanMediaDto bindTeachplanMediaDto){
+        teachplanService.associationMedia(bindTeachplanMediaDto);
+    }
+
+    @ApiOperation(value = "删除课程计划和媒资信息绑定的信息")
+    @DeleteMapping("/association/media/{teachPlanId}/{mediaId}")
+    public void deleteAssociationMedia(@PathVariable Long teachPlanId,@PathVariable String mediaId){
+        teachplanService.deleteAssociationMedia(teachPlanId,mediaId);
     }
 }

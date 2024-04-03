@@ -18,7 +18,7 @@ import com.zhiqiantong.content.model.po.CourseBase;
  * @since 2024-03-20
  */
 public interface CourseBaseService extends IService<CourseBase> {
-    PageResult<CourseBase> queryAllList(PageParams pageParams, QueryCourseParamsDto queryCourseParams);
+    PageResult<CourseBase> queryAllList(long companyId, PageParams pageParams, QueryCourseParamsDto queryCourseParams);
 
     CourseBaseInfoDto createCourseBase(Long companyId, AddCourseDto addCourseDto);
 
@@ -27,4 +27,6 @@ public interface CourseBaseService extends IService<CourseBase> {
     CourseBaseInfoDto modifyCourseBase(Long companyId, EditCourseDto editCourseDto);
 
     void deleteCourseBase(Long companyId, Long courseId);
+
+    CourseBaseInfoDto getCourseBaseInfo(long courseId);
 }
