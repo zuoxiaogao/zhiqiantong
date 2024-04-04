@@ -37,15 +37,15 @@ public class PasswordAuthServiceImpl implements AuthService {
         String checkcode = authParamsDto.getCheckcode();
         String checkcodekey = authParamsDto.getCheckcodekey();
 
-        if(StringUtils.isBlank(checkcodekey) || StringUtils.isBlank(checkcode)){
-            throw new RuntimeException("验证码为空");
-        }
-
-        Boolean verify = checkCodeClient.verify(checkcodekey, checkcode);
-
-        if(!verify){
-            throw new RuntimeException("验证码输入错误");
-        }
+//        if(StringUtils.isBlank(checkcodekey) || StringUtils.isBlank(checkcode)){
+//            throw new RuntimeException("验证码为空");
+//        }
+//
+//        Boolean verify = checkCodeClient.verify(checkcodekey, checkcode);
+//
+//        if(!verify){
+//            throw new RuntimeException("验证码输入错误");
+//        }
 
         //账号
         String username = authParamsDto.getUsername();

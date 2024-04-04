@@ -3,12 +3,10 @@ package com.zhiqiantong.content.api;
 import com.zhiqiantong.base.execption.ValidationGroups;
 import com.zhiqiantong.base.model.PageParams;
 import com.zhiqiantong.base.model.PageResult;
-import com.zhiqiantong.content.model.dto.AddCourseDto;
-import com.zhiqiantong.content.model.dto.CourseBaseInfoDto;
-import com.zhiqiantong.content.model.dto.EditCourseDto;
-import com.zhiqiantong.content.model.dto.QueryCourseParamsDto;
+import com.zhiqiantong.content.model.dto.*;
 import com.zhiqiantong.content.model.po.CourseBase;
 import com.zhiqiantong.content.service.CourseBaseService;
+import com.zhiqiantong.content.service.CoursePublishService;
 import com.zhiqiantong.content.util.SecurityUtil;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -28,6 +26,9 @@ import static com.zhiqiantong.content.utils.common.ContentCommon.COMPANY_ID;
 public class CourseBaseController {
     @Autowired
     private CourseBaseService courseBaseService;
+
+    @Autowired
+    private CoursePublishService coursePublishService;
 
 
     @ApiOperation("所有课程查询接口")
@@ -72,5 +73,12 @@ public class CourseBaseController {
     @DeleteMapping("{courseId}")
     public void deleteCourseBase(@PathVariable Long courseId){
         courseBaseService.deleteCourseBase(COMPANY_ID,courseId);
+    }
+
+    @ApiOperation("获取课程发布信息")
+    @GetMapping("/whole/{courseId}")
+    public CoursePreviewDto getPreviewInfo(@PathVariable("courseId") Long courseId) {
+        //获取课程预览信息
+        return coursePublishService.getCoursePreviewInfo(courseId);
     }
 }

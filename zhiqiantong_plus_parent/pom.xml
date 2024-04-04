@@ -17,7 +17,7 @@
         <spring-cloud.version>Hoxton.SR9</spring-cloud.version>
         <org.mapstruct.version>1.3.1.Final</org.mapstruct.version>
         <spring-cloud-alibaba.version>2.2.6.RELEASE</spring-cloud-alibaba.version>
-        <org.projectlombok.version>1.18.8</org.projectlombok.version>
+        <org.projectlombok.version>1.18.20</org.projectlombok.version>
         <javax.servlet-api.version>4.0.1</javax.servlet-api.version>
         <fastjson.version>1.2.83</fastjson.version>
         <druid-spring-boot-starter.version>1.2.8</druid-spring-boot-starter.version>
@@ -186,6 +186,21 @@
         </dependencies>
 
     </dependencyManagement>
+
+    <modules>
+        <module>../zhiqiantong_plus_base</module>
+        <module>../zhiqiantong_plus_checkcode</module>
+        <module>../zhiqiantong_plus_gateway</module>
+        <module>../zhiqiantong_plus_auth</module>
+        <module>../zhiqiantong_plus_content</module>
+        <module>../zhiqiantong_plus_learning</module>
+        <module>../zhiqiantong_plus_media</module>
+        <module>../zhiqiantong_plus_orders</module>
+        <module>../zhiqiantong_plus_message_sdk</module>
+        <module>../zhiqiantong_plus_search</module>
+        <module>../zhiqiantong_plus_system</module>
+    </modules>
+
 
     <build>
         <finalName>${project.name}</finalName>

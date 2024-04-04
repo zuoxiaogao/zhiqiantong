@@ -174,7 +174,7 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhdWQiOlsiemhpcWlhb
 
 ################扩展认证请求参数后######################
 ###密码模式
-POST {{auth_host}}/auth/oauth/token?client_id=ZqtWebApp&client_secret=ZqtWebApp&grant_type=password&username={"username":"stu1","authType":"password","password":"111111"}
+POST {{auth_host}}/auth/oauth/token?client_id=ZqtWebApp&client_secret=ZqtWebApp&grant_type=password&username={"username":"18339407110","authType":"password","password":"110110abc."}
 
 ### 申请验证码
 POST {{checkcode_host}}/checkcode/pic
@@ -198,3 +198,6 @@ Content-Type: application/json
 ### 查询课程发布信息
 GET {{content_host}}/content/r/coursepublish/2
 
+### 添加选课
+POST {{learning_host}}/learning/choosecourse/124
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhdWQiOlsiemhpcWlhbnRvbmctcGx1cyJdLCJ1c2VyX25hbWUiOiJ7XCJjZWxscGhvbmVcIjpcIjE4MzM5NDA3MTEwXCIsXCJjcmVhdGVUaW1lXCI6XCIyMDI0LTA0LTAyVDIzOjI0OjU5XCIsXCJlbWFpbFwiOlwiMTU0Nzk2ODExMEBxcS5jb21cIixcImlkXCI6XCIxNzc1MTgyNjQ2NDE0OTk5NTUzXCIsXCJuaWNrbmFtZVwiOlwi5oiR5Y2T5p-Q5Lq6XCIsXCJwZXJtaXNzaW9uc1wiOltcInhjX3N5c21hbmFnZXJcIixcInhjX3N5c21hbmFnZXJfZG9jXCIsXCJ4Y19zeXNtYW5hZ2VyX2xvZ1wiLFwieGNfc3lzbWFuYWdlcl9jb21wYW55XCIsXCJ4Y190ZWFjaG1hbmFnZXJfY291cnNlX2xpc3RcIl0sXCJzdGF0dXNcIjpcIjFcIixcInVzZXJuYW1lXCI6XCJmdXl1emh1b1wiLFwidXR5cGVcIjpcIjEwMTAwMVwifSIsInNjb3BlIjpbImFsbCJdLCJleHAiOjE3MTIxNDUzMTIsImF1dGhvcml0aWVzIjpbInhjX3N5c21hbmFnZXJfZG9jIiwieGNfdGVhY2htYW5hZ2VyX2NvdXJzZV9saXN0IiwieGNfc3lzbWFuYWdlciIsInhjX3N5c21hbmFnZXJfY29tcGFueSIsInhjX3N5c21hbmFnZXJfbG9nIl0sImp0aSI6ImY5YjNmNDkzLTY0ZDUtNDg0OC1hMWVhLTE2Yzk4MTM0MmRhMyIsImNsaWVudF9pZCI6IlpxdFdlYkFwcCJ9.zhv58FrtMCUlFsC0NAO-lVaRSarbdd8XQvahjUmClII
